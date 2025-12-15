@@ -9,8 +9,13 @@ def create_note():
     text = tk.Text(note, wrap='word', bg='yellow', fg='black')
     text.pack(expand=True, fill='both') # expand to fill the window and fill text both directions
 
-    note.attributes('-topmost', not note.attributes('-topmost'))
     tk.Button(note, text="Always on Top", command=lambda: note.attributes('-topmost', not note.attributes('-topmost'))).pack()
+
+def change_color(text):
+    colors = ['yellow', 'lightblue', 'lightgreen', 'pink', 'white']
+    current_color = text.cget('bg')
+    next_color = colors[(colors.index(current_color) + 1) % len(colors)]
+    text.configure(bg=next_color)
 
 def get_window_data(note, text):
     return {
@@ -22,6 +27,7 @@ def get_window_data(note, text):
     }
 
 root = tk.Tk()
+root.title("Sticky Notes App")
 root.geometry("200x200")
 # root.withdraw()  # Hide the main window
 tk.Button(root, text="New Note", command=create_note).pack()
